@@ -42,7 +42,7 @@ module Jenkins
 
     def latest_war_file
       return nil if all_war_files_as_object.empty?
-      all_war_files_as_object.first
+      all_war_files_as_object.select { |f| f.installed? }.first
     end
 
 

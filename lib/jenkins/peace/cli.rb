@@ -8,13 +8,8 @@ module Jenkins
       desc 'infos', 'Display infos about this gem'
 
       def infos
-        list = []
-        Jenkins::Peace.infos.each do |key , value|
-          list << [key.upcase, value]
-        end
-
         say
-        table = TTY::Table.new rows: list
+        table = TTY::Table.new rows: Jenkins::Peace.infos.to_a
         puts table.render(:basic, padding: [0, 2])
         say
       end
@@ -23,11 +18,8 @@ module Jenkins
       desc 'latest', 'Display infos about the latest version of war file installed'
 
       def latest
-        if Jenkins::Peace.latest_version
-          say Jenkins::Peace.latest_version, :green
-        else
-          say 'No Jenkins war files installed', :yellow
-        end
+        return say 'No Jenkins war files installed', :yellow unless Jenkins::Peace.latest_version
+        say Jenkins::Peace.latest_version, :green
       end
 
 
@@ -35,19 +27,7 @@ module Jenkins
 
       def list
         return say 'No Jenkins war files installed', :yellow if Jenkins::Peace.list.empty?
-
-        list = []
-        Jenkins::Peace.list.each do |war_file|
-          installed = war_file.installed? ? green(war_file.installed?) : red(war_file.installed?)
-          if war_file.latest_version?
-            version = "latest (#{war_file.real_version})"
-          else
-            version = war_file.version
-          end
-          list << [green(version), war_file.location, war_file.classpath, installed]
-        end
-
-        table = TTY::Table.new header: [bold('Version'), bold('Location'), bold('Classpath'), bold('Installed')], rows: list
+        table = TTY::Table.new header: formated_headers, rows: formated_war_files_list
         puts table.render(:ascii, padding: [0, 2])
       end
 
@@ -55,30 +35,15 @@ module Jenkins
       desc 'download <version>', 'Download war file corresponding to version passed in params'
 
       def download(version)
-        war_file = Jenkins::Peace.build_war_file(version)
-        if war_file.exists?
-          yes_no_question('Overwrite existing file?') do
-            Jenkins::Peace.download(version)
-          end
-        else
-          Jenkins::Peace.download(version)
-          say 'Done!', :green
-        end
+        check_presence_and_call_method(:download, version)
       end
 
 
       desc 'unpack <version>', 'Unpack war file corresponding to version passed in params'
 
       def unpack(version)
-        war_file = Jenkins::Peace.build_war_file(version)
-        return download_it_first! unless war_file.exists?
-        if war_file.unpacked?
-          yes_no_question('Overwrite existing file?') do
-            Jenkins::Peace.unpack(version)
-          end
-        else
-          Jenkins::Peace.unpack(version)
-          say 'Done!', :green
+        check_presence_and_call_method(:unpack, version, :unpacked?) do |war_file|
+          return download_it_first! unless war_file.exists?
         end
       end
 
@@ -86,15 +51,7 @@ module Jenkins
       desc 'install <version>', 'Install war file corresponding to version passed in params (will download then unpack war file)'
 
       def install(version)
-        war_file = Jenkins::Peace.build_war_file(version)
-        if war_file.exists?
-          yes_no_question('Overwrite existing file?') do
-            Jenkins::Peace.install(version)
-          end
-        else
-          Jenkins::Peace.install(version)
-          say 'Done!', :green
-        end
+        check_presence_and_call_method(:install, version)
       end
 
 
@@ -165,6 +122,36 @@ module Jenkins
         def download_it_first!
           say "War file doesn't exist, you should install it first with : jenkins.peace install <version>", :yellow
           say 'Exiting !', :yellow
+        end
+
+
+        def check_presence_and_call_method(method, version, check_method = :exists?, &block)
+          war_file = Jenkins::Peace.build_war_file(version)
+          yield war_file if block_given?
+          if war_file.send(check_method)
+            yes_no_question('Overwrite existing file?') do
+              Jenkins::Peace.send(method, version)
+            end
+          else
+            Jenkins::Peace.send(method, version)
+            say 'Done!', :green
+          end
+        end
+
+
+        def formated_war_files_list
+          list = []
+          Jenkins::Peace.list.each do |war_file|
+            installed = war_file.installed? ? green(war_file.installed?) : red(war_file.installed?)
+            version = war_file.latest_version? ? "latest (#{war_file.real_version})" : war_file.version
+            list << [green(version), war_file.location, war_file.classpath, installed]
+          end
+          list
+        end
+
+
+        def formated_headers
+          [bold('Version'), bold('Location'), bold('Classpath'), bold('Installed')]
         end
 
       end
