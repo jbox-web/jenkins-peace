@@ -70,8 +70,9 @@ describe Jenkins::Peace do
     context 'when war files are installed' do
       it 'should return a list of war files' do
         stub_with_return(:all_war_files, ['1.629', '1.628', '1.630'])
+        allow_any_instance_of(Jenkins::Peace::WarFile).to receive(:installed?).and_return(true)
         expect(helper.list.first).to be_instance_of(Jenkins::Peace::WarFile)
-        expect(helper.latest_war_file.version).to eq '1.630'
+        expect(helper.list.first.version).to eq '1.630'
       end
     end
   end
@@ -86,8 +87,9 @@ describe Jenkins::Peace do
     end
 
     context 'when war files are installed' do
-      it 'should return a list of war files' do
+      it 'should return the last war file installed' do
         stub_with_return(:all_war_files, ['1.629', '1.628'])
+        allow_any_instance_of(Jenkins::Peace::WarFile).to receive(:installed?).and_return(true)
         expect(helper.latest_war_file).to be_instance_of(Jenkins::Peace::WarFile)
         expect(helper.latest_war_file.version).to eq '1.629'
       end
@@ -104,8 +106,9 @@ describe Jenkins::Peace do
     end
 
     context 'when war files are installed' do
-      it 'should return a list of war files' do
+      it 'should return the classpath of the last war file installed' do
         stub_with_return(:all_war_files, ['1.629', '1.628'])
+        allow_any_instance_of(Jenkins::Peace::WarFile).to receive(:installed?).and_return(true)
         expect(helper.latest_version).to eq File.join(ENV['HOME'], '.jenkins/wars/1.629/WEB-INF/lib/jenkins-core-1.629.jar')
       end
     end
