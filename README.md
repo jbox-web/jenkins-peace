@@ -1,4 +1,4 @@
-## Jenkins Peace
+## Jenkins ~~War~~ Peace
 
 [![GitHub license](https://img.shields.io/github/license/jbox-web/jenkins-peace.svg)](https://github.com/jbox-web/jenkins-peace/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/jbox-web/jenkins-peace.svg)](https://github.com/jbox-web/jenkins-peace/releases/latest)
