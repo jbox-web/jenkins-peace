@@ -1,4 +1,7 @@
 require 'yaml'
 require 'jenkins/peace'
+require 'jenkins/peace/thor_extensions'
 require 'jenkins/peace/cli'
+require 'jenkins/peace/console_logger'
+require 'jenkins/peace/content_downloader'
 require 'jenkins/peace/war_file'

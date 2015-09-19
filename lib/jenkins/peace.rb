@@ -95,6 +95,7 @@ module Jenkins
 
 
     def all_war_files
+      FileUtils.mkdir_p war_files_cache unless File.exists?(war_files_cache)
       Pathname.new(war_files_cache).children.select { |c| c.directory? }
     end
 
@@ -103,7 +104,7 @@ module Jenkins
 
 
       def build_war_file_options
-        { base_url: jenkins_war_url, base_path: war_files_cache, lib_path: war_unpacked_cache, server_path: server_path }
+        { base_url: jenkins_war_url, base_path: war_files_cache, lib_path: war_unpacked_cache, server_path: server_path, logger: ConsoleLogger.new }
       end
 
 

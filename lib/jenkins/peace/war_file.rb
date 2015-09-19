@@ -1,5 +1,4 @@
 require 'socket'
-require 'yaml'
 
 module Jenkins
   module Peace
@@ -12,14 +11,16 @@ module Jenkins
       attr_reader :base_path
       attr_reader :base_url
       attr_reader :server_path
+      attr_reader :logger
 
 
       def initialize(version, opts = {})
         @version     = version
-        @lib_path    = opts.delete(:lib_path) { '' }
-        @base_path   = opts.delete(:base_path) { '' }
-        @base_url    = opts.delete(:base_url) { '' }
-        @server_path = opts.delete(:server_path) { '' }
+        @lib_path    = opts.fetch(:lib_path, '')
+        @base_path   = opts.fetch(:base_path, '')
+        @base_url    = opts.fetch(:base_url, '')
+        @server_path = opts.fetch(:server_path, '')
+        @logger      = opts.fetch(:logger, $stdout)
       end
 
 
@@ -142,13 +143,12 @@ module Jenkins
 
 
         def execute_command(command)
-          puts command
           `#{command}`
         end
 
 
-        def fetch_content(url, target_file)
-          execute_command("wget #{url} -q -O #{target_file}")
+        def fetch_content(url, target_file, limit = 10)
+          ContentDownloader.new(target_file, logger).download(url)
         end
 
 

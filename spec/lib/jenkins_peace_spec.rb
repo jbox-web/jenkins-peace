@@ -48,22 +48,22 @@ describe Jenkins::Peace do
   end
 
 
-  def stub_with_return(method, value)
-    expect_any_instance_of(Jenkins::Peace).to receive(method).at_least(:once).and_return(value)
+  def stub_all_war_files_with_return(value)
+    expect_any_instance_of(Jenkins::Peace).to receive(:all_war_files).at_least(:once).and_return(value)
   end
 
 
   describe '.list' do
     context 'when no war file is installed' do
       it 'should return empty array' do
-        stub_with_return(:all_war_files, [])
+        stub_all_war_files_with_return([])
         expect(helper.list).to eq []
       end
     end
 
     context 'when war files are installed' do
       it 'should return a list of war files' do
-        stub_with_return(:all_war_files, ['1.629', '1.628', '1.630'])
+        stub_all_war_files_with_return(['1.629', '1.628', '1.630'])
         allow_any_instance_of(Jenkins::Peace::WarFile).to receive(:installed?).and_return(true)
         expect(helper.list.first).to be_instance_of(Jenkins::Peace::WarFile)
         expect(helper.list.first.version).to eq '1.630'
@@ -75,14 +75,14 @@ describe Jenkins::Peace do
   describe '.latest_war_file' do
     context 'when no war file is installed' do
       it 'should return nil' do
-        stub_with_return(:all_war_files, [])
+        stub_all_war_files_with_return([])
         expect(helper.latest_war_file).to be nil
       end
     end
 
     context 'when war files are installed' do
       it 'should return the last war file installed' do
-        stub_with_return(:all_war_files, ['1.629', '1.628'])
+        stub_all_war_files_with_return(['1.629', '1.628'])
         allow_any_instance_of(Jenkins::Peace::WarFile).to receive(:installed?).and_return(true)
         expect(helper.latest_war_file).to be_instance_of(Jenkins::Peace::WarFile)
         expect(helper.latest_war_file.version).to eq '1.629'
@@ -94,14 +94,14 @@ describe Jenkins::Peace do
   describe '.latest_version' do
     context 'when no war file is installed' do
       it 'should return nil' do
-        stub_with_return(:all_war_files, [])
+        stub_all_war_files_with_return([])
         expect(helper.latest_version).to be nil
       end
     end
 
     context 'when war files are installed' do
       it 'should return the classpath of the last war file installed' do
-        stub_with_return(:all_war_files, ['1.629', '1.628'])
+        stub_all_war_files_with_return(['1.629', '1.628'])
         allow_any_instance_of(Jenkins::Peace::WarFile).to receive(:installed?).and_return(true)
         expect(helper.latest_version).to eq File.join(ENV['HOME'], '.jenkins/wars/1.629/WEB-INF/lib/jenkins-core-1.629.jar')
       end
@@ -111,7 +111,7 @@ describe Jenkins::Peace do
 
   describe '.clean!' do
     it 'should remove all war files' do
-      stub_with_return(:all_war_files, ['1.629', '1.628'])
+      stub_all_war_files_with_return(['1.629', '1.628'])
       allow_any_instance_of(Jenkins::Peace::WarFile).to receive(:remove!)
       helper.clean!
     end
@@ -153,6 +153,7 @@ describe Jenkins::Peace do
 
   describe '.all_war_files' do
     it 'shoud return a list of war files' do
+      expect(FileUtils).to receive(:mkdir_p).with(WAR_FILES_CACHE)
       expect(Pathname).to receive(:new).with(WAR_FILES_CACHE).and_return(OpenStruct.new(children: []))
       helper.all_war_files
     end
