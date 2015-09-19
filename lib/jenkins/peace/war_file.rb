@@ -5,7 +5,7 @@ module Jenkins
   module Peace
     class WarFile
 
-      LATEST_VERSION_REGEX = /jenkins-core-(1\.\d{3}).jar/
+      JENKINS_VERSION_REGEX = /jenkins-core-(1\.\d{3}).jar/
 
       attr_reader :version
       attr_reader :lib_path
@@ -30,8 +30,8 @@ module Jenkins
 
       def real_version
         return version unless latest_version?
-        klass = Dir[File.join(lib_dir, 'WEB-INF', 'lib', '*.jar')].select { |f| f =~ LATEST_VERSION_REGEX }.first
-        klass.match(LATEST_VERSION_REGEX)[1]
+        klass = find_core_librairy
+        klass.nil? ? nil : klass.match(JENKINS_VERSION_REGEX)[1]
       end
 
 
@@ -94,19 +94,30 @@ module Jenkins
 
       def remove!
         FileUtils.rm_rf base_dir
+        FileUtils.rm_rf lib_dir
       end
 
 
       def unpack!
         FileUtils.mkdir_p(lib_dir)
-        Dir.chdir(lib_dir) do
-          command = "jar xvf #{location}"
-          `#{command}`
+        execute_command("cd #{lib_dir} && jar xvf #{location}")
+      end
+
+
+      def start!(options = {})
+        control = options.fetch(:control, 3002).to_i
+        kill    = options.fetch(:kill, false)
+
+        if kill
+          TCPSocket.open('localhost', control) { |sock| sock.write('0') }
+        else
+          command = build_command_line(options)
+          exec(*command)
         end
       end
 
 
-      def execute!(options = {})
+      def build_command_line(options = {})
         home    = options.fetch(:home, server_path)
         port    = options.fetch(:port, 3001).to_i
         control = options.fetch(:control, 3002).to_i
@@ -114,33 +125,35 @@ module Jenkins
         kill    = options.fetch(:kill, false)
         logfile = options.fetch(logfile, nil)
 
-        if kill
-          TCPSocket.open('localhost', control) do |sock|
-            sock.write('0')
-          end
-        else
-          javatmp = File.join(home, 'javatmp')
-          FileUtils.mkdir_p javatmp
+        java_tmp = File.join(home, 'javatmp')
+        FileUtils.mkdir_p java_tmp
 
-          ENV['HUDSON_HOME'] = home
-          cmd = ['java', "-Djava.io.tmpdir=#{javatmp}", '-jar', location]
-          cmd << '--daemon' if daemon
-          cmd << "--httpPort=#{port}"
-          cmd << "--controlPort=#{control}"
-          cmd << "--logfile=#{File.expand_path(logfile)}" if logfile
-
-          exec(*cmd)
-        end
+        ENV['HUDSON_HOME'] = home
+        cmd = ['java', "-Djava.io.tmpdir=#{java_tmp}", '-jar', location]
+        cmd << '--daemon' if daemon
+        cmd << "--httpPort=#{port}"
+        cmd << "--controlPort=#{control}"
+        cmd << "--logfile=#{File.expand_path(logfile)}" if logfile
+        cmd
       end
 
 
       private
 
 
-        def fetch_content(url, target_file)
-          command = "wget #{url} -q -O #{target_file}"
+        def execute_command(command)
           puts command
           `#{command}`
+        end
+
+
+        def fetch_content(url, target_file)
+          execute_command("wget #{url} -q -O #{target_file}")
+        end
+
+
+        def find_core_librairy
+          Dir[File.join(lib_dir, 'WEB-INF', 'lib', '*.jar')].select { |f| f =~ JENKINS_VERSION_REGEX }.first
         end
 
     end

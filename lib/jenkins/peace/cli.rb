@@ -84,7 +84,7 @@ module Jenkins
       def server(version)
         war_file = Jenkins::Peace.build_war_file(version)
         if war_file.exists?
-          war_file.execute!(options)
+          war_file.start!(options)
         else
           download_it_first!
         end

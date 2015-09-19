@@ -94,16 +94,16 @@ module Jenkins
     end
 
 
+    def all_war_files
+      Pathname.new(war_files_cache).children.select { |c| c.directory? }
+    end
+
+
     private
 
 
       def build_war_file_options
         { base_url: jenkins_war_url, base_path: war_files_cache, lib_path: war_unpacked_cache, server_path: server_path }
-      end
-
-
-      def all_war_files
-        Pathname.new(war_files_cache).children.select { |c| c.directory? }
       end
 
 

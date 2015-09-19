@@ -6,12 +6,6 @@ describe Jenkins::Peace do
     Jenkins::Peace
   end
 
-  JENKINS_WAR_URL    = 'http://mirrors.jenkins-ci.org/war/'
-  BASE_PATH          = File.join(ENV['HOME'], '.jenkins')
-  WAR_FILES_CACHE    = File.join(ENV['HOME'], '.jenkins', 'war-files')
-  WAR_UNPACKED_CACHE = File.join(ENV['HOME'], '.jenkins', 'wars')
-  SERVER_PATH        = File.join(ENV['HOME'], '.jenkins', 'server')
-
 
   def infos
     {
@@ -153,6 +147,14 @@ describe Jenkins::Peace do
       expect_any_instance_of(Jenkins::Peace::WarFile).to receive(:exists?).and_return(true)
       expect_any_instance_of(Jenkins::Peace::WarFile).to receive(:remove!)
       expect(helper.remove('1.628')).to be_instance_of(Jenkins::Peace::WarFile)
+    end
+  end
+
+
+  describe '.all_war_files' do
+    it 'shoud return a list of war files' do
+      expect(Pathname).to receive(:new).with(WAR_FILES_CACHE).and_return(OpenStruct.new(children: []))
+      helper.all_war_files
     end
   end
 
