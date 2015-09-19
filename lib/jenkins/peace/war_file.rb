@@ -123,7 +123,6 @@ module Jenkins
         port    = options.fetch(:port, 3001).to_i
         control = options.fetch(:control, 3002).to_i
         daemon  = options.fetch(:daemon, false)
-        kill    = options.fetch(:kill, false)
         logfile = options.fetch(logfile, nil)
 
         java_tmp = File.join(home, 'javatmp')
