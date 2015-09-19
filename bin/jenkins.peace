@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'jenkins_peace'
+
+Jenkins::Peace::CLI.start(ARGV)
