@@ -17,8 +17,12 @@ end
 desc 'Install latest Jenkins war file'
 task default: :prepare
 task :prepare do
-  require 'jenkins_peace'
-  Jenkins::Peace::ConsoleLogger.new().info("Installing Jenkins war file version : 'latest'")
-  Jenkins::Peace.install('latest')
-  Jenkins::Peace::ConsoleLogger.new().info('Done !')
+  begin
+    require 'jenkins_peace'
+    Jenkins::Peace::ConsoleLogger.new().info("Installing Jenkins war file version : 'latest'")
+    Jenkins::Peace.install('latest')
+    Jenkins::Peace::ConsoleLogger.new().info('Done !')
+  rescue
+    puts "Failed to install Jenkins war, you'll have to install it yourself with 'jenkins.peace install <version>'"
+  end
 end
