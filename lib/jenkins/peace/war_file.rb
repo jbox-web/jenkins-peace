@@ -16,23 +16,27 @@ module Jenkins
       attr_reader :file_name
       attr_reader :base_dir
       attr_reader :lib_dir
+      attr_reader :klass_path
+      attr_reader :plugins_path
       attr_reader :location
       attr_reader :url
 
 
       def initialize(version, opts = {})
-        @version     = version
-        @lib_path    = opts.fetch(:lib_path, '')
-        @base_path   = opts.fetch(:base_path, '')
-        @base_url    = opts.fetch(:base_url, '')
-        @server_path = opts.fetch(:server_path, '')
-        @logger      = opts.fetch(:logger, $stdout)
+        @version      = version
+        @lib_path     = opts.fetch(:lib_path, '')
+        @base_path    = opts.fetch(:base_path, '')
+        @base_url     = opts.fetch(:base_url, '')
+        @server_path  = opts.fetch(:server_path, '')
+        @logger       = opts.fetch(:logger, $stdout)
 
-        @file_name   = 'jenkins.war'
-        @base_dir    = File.join(base_path, version)
-        @lib_dir     = File.join(lib_path, version)
-        @location    = File.join(base_dir, file_name)
-        @url         = File.join(base_url, version, file_name)
+        @file_name    = 'jenkins.war'
+        @base_dir     = File.join(base_path, version)
+        @lib_dir      = File.join(lib_path, version)
+        @klass_path   = File.join(lib_dir, '**/*.jar')
+        @plugins_path = File.join(lib_dir, 'WEB-INF', 'plugins')
+        @location     = File.join(base_dir, file_name)
+        @url          = File.join(base_url, version, file_name)
       end
 
 
