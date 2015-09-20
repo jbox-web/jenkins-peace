@@ -56,15 +56,15 @@ module Jenkins
     end
 
 
-    def download(version, overwrite = false)
-      war_file = build_war_file(version)
+    def download(version, overwrite = false, url = nil)
+      war_file = build_war_file(version, url)
       war_file = check_for_presence_and_execute(war_file, :download!, overwrite)
       war_file
     end
 
 
-    def install(version, overwrite = false)
-      war_file = build_war_file(version)
+    def install(version, overwrite = false, url = nil)
+      war_file = build_war_file(version, url)
       war_file = check_for_presence_and_execute(war_file, :install!, overwrite)
       war_file
     end
@@ -89,8 +89,10 @@ module Jenkins
     end
 
 
-    def build_war_file(version)
-      WarFile.new(version, build_war_file_options)
+    def build_war_file(version, url = nil)
+      options = build_war_file_options
+      options = options.merge(base_url: url) unless url.nil?
+      WarFile.new(version, options)
     end
 
 
