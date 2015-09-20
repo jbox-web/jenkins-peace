@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'bundler/setup'
+require 'bundler'
 Bundler::GemHelper.install_tasks
 
 require 'rake'
@@ -18,6 +18,7 @@ desc 'Install latest Jenkins war file'
 task default: :prepare
 task :prepare do
   begin
+    require 'bundler/setup'
     require 'jenkins_peace'
     Jenkins::Peace::ConsoleLogger.new().info("Installing Jenkins war file version : 'latest'")
     Jenkins::Peace.install('latest')
