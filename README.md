@@ -12,6 +12,13 @@
 
 ### A small console application to manage Jenkins war files, easy, and in peace ;)
 
+This gem aims to replace [jenkins-war](https://rubygems.org/gems/jenkins-war/versions/1.514) to manage Jenkins war files.
+
+The previous version of this gem used to embed the war file directly in the GitHub repo which could lead to very long download time.
+
+This one uses a cache directory to store Jenkins war files (```/<home directory>/.jenkins/war-files```).
+
+
 ## Installation
 
 ```ruby
@@ -36,6 +43,17 @@ Commands:
   jenkins.peace unpack <version>    # Unpack war file corresponding to version passed in params
 ```
 
+## Example
+
+```sh
+nicolas@desktop:~$ jenkins.peace list
++------------------+-------------------------------------------------------+-------------------------------------------------------------------------+-------------+
+|  Version         |  Location                                             |  Classpath                                                              |  Installed  |
++------------------+-------------------------------------------------------+-------------------------------------------------------------------------+-------------+
+|  latest (1.629)  |  /home/nicolas/.jenkins/war-files/latest/jenkins.war  |  /home/nicolas/.jenkins/wars/latest/WEB-INF/lib/jenkins-core-1.629.jar  |  true       |
+|  1.628           |  /home/nicolas/.jenkins/war-files/1.628/jenkins.war   |  /home/nicolas/.jenkins/wars/1.628/WEB-INF/lib/jenkins-core-1.628.jar   |  true       |
++------------------+-------------------------------------------------------+-------------------------------------------------------------------------+-------------+
+```
 
 ## Contributors
 
