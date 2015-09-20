@@ -13,6 +13,12 @@ module Jenkins
       attr_reader :server_path
       attr_reader :logger
 
+      attr_reader :file_name
+      attr_reader :base_dir
+      attr_reader :lib_dir
+      attr_reader :location
+      attr_reader :url
+
 
       def initialize(version, opts = {})
         @version     = version
@@ -21,6 +27,12 @@ module Jenkins
         @base_url    = opts.fetch(:base_url, '')
         @server_path = opts.fetch(:server_path, '')
         @logger      = opts.fetch(:logger, $stdout)
+
+        @file_name   = 'jenkins.war'
+        @base_dir    = File.join(base_path, version)
+        @lib_dir     = File.join(lib_path, version)
+        @location    = File.join(base_dir, file_name)
+        @url         = File.join(base_url, version, file_name)
       end
 
 
@@ -53,31 +65,6 @@ module Jenkins
 
       def installed?
         exists? && unpacked?
-      end
-
-
-      def url
-        File.join(base_url, version, file_name)
-      end
-
-
-      def base_dir
-        File.join(base_path, version)
-      end
-
-
-      def lib_dir
-        File.join(lib_path, version)
-      end
-
-
-      def location
-        File.join(base_dir, file_name)
-      end
-
-
-      def file_name
-        'jenkins.war'
       end
 
 
