@@ -119,7 +119,7 @@ describe Jenkins::Peace do
 
 
   describe '.download' do
-    it 'shoud download a war file' do
+    it 'should download a war file' do
       expect_any_instance_of(Jenkins::Peace::WarFile).to receive(:download!)
       expect(helper.download('1.628')).to be_instance_of(Jenkins::Peace::WarFile)
     end
@@ -127,7 +127,7 @@ describe Jenkins::Peace do
 
 
   describe '.install' do
-    it 'shoud install a war file' do
+    it 'should install a war file' do
       expect_any_instance_of(Jenkins::Peace::WarFile).to receive(:install!)
       expect(helper.install('1.628')).to be_instance_of(Jenkins::Peace::WarFile)
     end
@@ -135,7 +135,7 @@ describe Jenkins::Peace do
 
 
   describe '.unpack' do
-    it 'shoud unpack a war file' do
+    it 'should unpack a war file' do
       expect_any_instance_of(Jenkins::Peace::WarFile).to receive(:unpack!)
       expect(helper.unpack('1.628')).to be_instance_of(Jenkins::Peace::WarFile)
     end
@@ -143,7 +143,7 @@ describe Jenkins::Peace do
 
 
   describe '.remove' do
-    it 'shoud remove a war file' do
+    it 'should remove a war file' do
       expect_any_instance_of(Jenkins::Peace::WarFile).to receive(:exists?).and_return(true)
       expect_any_instance_of(Jenkins::Peace::WarFile).to receive(:remove!)
       expect(helper.remove('1.628')).to be_instance_of(Jenkins::Peace::WarFile)
@@ -152,10 +152,42 @@ describe Jenkins::Peace do
 
 
   describe '.all_war_files' do
-    it 'shoud return a list of war files' do
+    it 'should return a list of war files' do
       expect(FileUtils).to receive(:mkdir_p).with(WAR_FILES_CACHE)
       expect(Pathname).to receive(:new).with(WAR_FILES_CACHE).and_return(OpenStruct.new(children: []))
       helper.all_war_files
+    end
+  end
+
+
+  describe 'check_for_presence_and_execute' do
+    context 'when file doesnt exist' do
+      it 'should check for file existence before executing method' do
+        war_file = helper.build_war_file('1.628')
+        expect_any_instance_of(Jenkins::Peace::WarFile).to receive(:exists?).and_return(false)
+        expect_any_instance_of(Jenkins::Peace::WarFile).to receive(:download!)
+        helper.check_for_presence_and_execute(war_file, :download!)
+      end
+    end
+
+    context 'when file exists' do
+      context 'and overwrite is false' do
+        it 'should do nothing' do
+          war_file = helper.build_war_file('1.628')
+          expect_any_instance_of(Jenkins::Peace::WarFile).to receive(:exists?).at_least(:twice).and_return(true)
+          expect_any_instance_of(Jenkins::Peace::WarFile).to_not receive(:download!)
+          helper.check_for_presence_and_execute(war_file, :download!, false)
+        end
+      end
+
+      context 'and overwrite is true' do
+        it 'should execute method' do
+          war_file = helper.build_war_file('1.628')
+          expect_any_instance_of(Jenkins::Peace::WarFile).to receive(:exists?).at_least(:twice).and_return(true)
+          expect_any_instance_of(Jenkins::Peace::WarFile).to receive(:download!)
+          helper.check_for_presence_and_execute(war_file, :download!, true)
+        end
+      end
     end
   end
 

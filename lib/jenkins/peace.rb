@@ -56,9 +56,23 @@ module Jenkins
     end
 
 
-    def download(version)
+    def download(version, overwrite = false)
       war_file = build_war_file(version)
-      war_file.download!
+      war_file = check_for_presence_and_execute(war_file, :download!, overwrite)
+      war_file
+    end
+
+
+    def install(version, overwrite = false)
+      war_file = build_war_file(version)
+      war_file = check_for_presence_and_execute(war_file, :install!, overwrite)
+      war_file
+    end
+
+
+    def unpack(version, overwrite = false)
+      war_file = build_war_file(version)
+      war_file = check_for_presence_and_execute(war_file, :unpack!, overwrite)
       war_file
     end
 
@@ -66,20 +80,6 @@ module Jenkins
     def remove(version)
       war_file = build_war_file(version)
       war_file.remove! if war_file.exists?
-      war_file
-    end
-
-
-    def install(version)
-      war_file = build_war_file(version)
-      war_file.install!
-      war_file
-    end
-
-
-    def unpack(version)
-      war_file = build_war_file(version)
-      war_file.unpack!
       war_file
     end
 
@@ -97,6 +97,16 @@ module Jenkins
     def all_war_files
       FileUtils.mkdir_p war_files_cache unless File.exists?(war_files_cache)
       Pathname.new(war_files_cache).children.select { |c| c.directory? }
+    end
+
+
+    def check_for_presence_and_execute(war_file, method, overwrite = false)
+      if !war_file.exists?
+        war_file.send(method)
+      elsif war_file.exists? && overwrite
+        war_file.send(method)
+      end
+      war_file
     end
 
 

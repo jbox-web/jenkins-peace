@@ -56,7 +56,7 @@ module Jenkins
         if war_file.send(check_method)
           yes_no_question('Overwrite existing file?') do
             info message
-            Jenkins::Peace.send(method, version)
+            Jenkins::Peace.send(method, version, true)
           end
         else
           info message
