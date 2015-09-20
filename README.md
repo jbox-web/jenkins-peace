@@ -57,7 +57,7 @@ nicolas@desktop:~$ jenkins.peace list
 
 ## Contributors
 
-A big thank to [them](https://github.com/jbox-web/gh-preview/blob/master/AUTHORS) for their contribution!
+A big thank to [them](https://github.com/jbox-web/jenkins-peace/blob/master/AUTHORS) for their contribution!
 
 ## Contribute
 
