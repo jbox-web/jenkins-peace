@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Jenkins ~~War~~ Peace by jbox-web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Jenkins ~~War~~ Peace</h1>
+      <h2 class="project-tagline">A small console application to manage Jenkins war files, easy, and in peace ;)</h2>
+      <a href="https://github.com/jbox-web/jenkins-peace" class="btn">View on GitHub</a>
+      <a href="https://github.com/jbox-web/jenkins-peace/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/jbox-web/jenkins-peace/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p><a href="https://github.com/jbox-web/jenkins-peace/blob/master/LICENSE"><img src="https://img.shields.io/github/license/jbox-web/jenkins-peace.svg" alt="GitHub license"></a>
+<a href="https://github.com/jbox-web/jenkins-peace/releases/latest"><img src="https://img.shields.io/github/release/jbox-web/jenkins-peace.svg" alt="GitHub release"></a>
+<a href="https://rubygems.org/gems/jenkins-peace/versions/1.0.0"><img src="https://img.shields.io/gem/v/jenkins-peace.svg" alt="Gem"></a>
+<a href="https://rubygems.org/gems/jenkins-peace/versions/1.0.0"><img src="https://img.shields.io/gem/dtv/jenkins-peace.svg" alt="Gem"></a>
+<a href="https://travis-ci.org/jbox-web/jenkins-peace"><img src="https://travis-ci.org/jbox-web/jenkins-peace.svg?branch=master" alt="Build Status"></a>
+<a href="https://codeclimate.com/github/jbox-web/jenkins-peace"><img src="https://codeclimate.com/github/jbox-web/jenkins-peace/badges/gpa.svg" alt="Code Climate"></a>
+<a href="https://codeclimate.com/github/jbox-web/jenkins-peace/coverage"><img src="https://codeclimate.com/github/jbox-web/jenkins-peace/badges/coverage.svg" alt="Test Coverage"></a>
+<a href="https://gemnasium.com/jbox-web/jenkins-peace"><img src="https://gemnasium.com/jbox-web/jenkins-peace.svg" alt="Dependency Status"></a>
+<a href="https://www.pullreview.com/github/jbox-web/jenkins-peace/reviews/master"><img src="https://www.pullreview.com/github/jbox-web/jenkins-peace/badges/master.svg?" alt="PullReview stats"></a></p>
+
+<p>This gem aims to replace <a href="https://rubygems.org/gems/jenkins-war/versions/1.514">jenkins-war</a> to manage Jenkins war files.</p>
+
+<p>The previous version of this gem used to embed the war file directly in the GitHub repo which could lead to very long download time.</p>
+
+<p>This one uses a cache directory to store Jenkins war files (<code>/&lt;home directory&gt;/.jenkins/war-files</code>).</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-source-ruby"><pre><span class="pl-k">gem</span> install jenkins<span class="pl-k">-</span>peace</pre></div>
+
+<p>No need to add it to your Gemfile, it will be globally available.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<div class="highlight highlight-source-shell"><pre>Commands:
+  jenkins.peace clean               <span class="pl-c"># Remove all war files</span>
+  jenkins.peace download <span class="pl-k">&lt;</span>version<span class="pl-k">&gt;</span>  <span class="pl-c"># Download war file corresponding to version passed in params</span>
+  jenkins.peace <span class="pl-c1">help</span> [COMMAND]      <span class="pl-c"># Describe available commands or one specific command</span>
+  jenkins.peace infos               <span class="pl-c"># Display infos about this gem</span>
+  jenkins.peace install <span class="pl-k">&lt;</span>version<span class="pl-k">&gt;</span>   <span class="pl-c"># Install war file corresponding to version passed in params (will download then unpack war file)</span>
+  jenkins.peace latest              <span class="pl-c"># Display infos about the latest version of war file installed</span>
+  jenkins.peace list                <span class="pl-c"># List war files installed</span>
+  jenkins.peace remove <span class="pl-k">&lt;</span>version<span class="pl-k">&gt;</span>    <span class="pl-c"># Remove war file corresponding to version passed in params</span>
+  jenkins.peace server <span class="pl-k">&lt;</span>version<span class="pl-k">&gt;</span>    <span class="pl-c"># Start a server with the war file corresponding to version passed in params</span>
+  jenkins.peace unpack <span class="pl-k">&lt;</span>version<span class="pl-k">&gt;</span>    <span class="pl-c"># Unpack war file corresponding to version passed in params</span></pre></div>
+
+<h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<div class="highlight highlight-source-shell"><pre>nicolas@desktop:<span class="pl-k">~</span>$ jenkins.peace list
++------------------+-------------------------------------------------------+-------------------------------------------------------------------------+-------------+
+<span class="pl-k">|</span>  Version         <span class="pl-k">|</span>  Location                                             <span class="pl-k">|</span>  Classpath                                                              <span class="pl-k">|</span>  Installed  <span class="pl-k">|</span>
++------------------+-------------------------------------------------------+-------------------------------------------------------------------------+-------------+
+<span class="pl-k">|</span>  latest (1.629)  <span class="pl-k">|</span>  /home/nicolas/.jenkins/war-files/latest/jenkins.war  <span class="pl-k">|</span>  /home/nicolas/.jenkins/wars/latest/WEB-INF/lib/jenkins-core-1.629.jar  <span class="pl-k">|</span>  <span class="pl-c1">true</span>       <span class="pl-k">|</span>
+<span class="pl-k">|</span>  1.628           <span class="pl-k">|</span>  /home/nicolas/.jenkins/war-files/1.628/jenkins.war   <span class="pl-k">|</span>  /home/nicolas/.jenkins/wars/1.628/WEB-INF/lib/jenkins-core-1.628.jar   <span class="pl-k">|</span>  <span class="pl-c1">true</span>       <span class="pl-k">|</span>
++------------------+-------------------------------------------------------+-------------------------------------------------------------------------+-------------+</pre></div>
+
+<h2>
+<a id="contributors" class="anchor" href="#contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributors</h2>
+
+<p>A big thank to <a href="https://github.com/jbox-web/jenkins-peace/blob/master/AUTHORS">them</a> for their contribution!</p>
+
+<h2>
+<a id="contribute" class="anchor" href="#contribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contribute</h2>
+
+<p>You can contribute to this plugin in many ways such as :</p>
+
+<ul>
+<li>Helping with documentation</li>
+<li>Contributing code (features or bugfixes)</li>
+<li>Reporting a bug</li>
+<li>Submitting translations</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/jbox-web/jenkins-peace">Jenkins ~~War~~ Peace</a> is maintained by <a href="https://github.com/jbox-web">jbox-web</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-36504891-3");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
