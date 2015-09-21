@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in sitgen.gemspec
 gemspec
 
-gem 'codeclimate-test-reporter', group: :test, require: nil
+group :test do
+  gem 'codeclimate-test-reporter', require: false
+  gem 'pullreview-coverage',       require: false
+end
