@@ -19,11 +19,11 @@ Gem::Specification.new do |s|
   s.extensions    = ['Rakefile']
   s.require_paths = ['lib']
 
-  s.add_runtime_dependency 'rake',             '~> 10.4', '>= 10.4.2'
-  s.add_runtime_dependency 'thor',             '~> 0.19', '>= 0.19.1'
-  s.add_runtime_dependency 'tty-table',        '~> 0.3',  '>= 0.3.0'
-  s.add_runtime_dependency 'ruby-progressbar', '~> 1.7',  '>= 1.7.5'
+  s.add_runtime_dependency 'rake'
+  s.add_runtime_dependency 'thor'
+  s.add_runtime_dependency 'tty-table'
+  s.add_runtime_dependency 'ruby-progressbar'
 
-  s.add_development_dependency 'rspec',     '~> 3.3',  '>= 3.3.0'
-  s.add_development_dependency 'simplecov', '~> 0.10', '>= 0.10.0'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'simplecov'
 end
