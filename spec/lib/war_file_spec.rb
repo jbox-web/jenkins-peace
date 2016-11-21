@@ -63,6 +63,9 @@ describe Jenkins::Peace::WarFile do
         war_file = build_war_file('latest')
         expect(war_file).to receive(:find_core_librairy).and_return('jenkins-core-1.631.jar')
         expect(war_file.real_version).to eq '1.631'
+
+        expect(war_file).to receive(:find_core_librairy).and_return('jenkins-core-2.33.jar')
+        expect(war_file.real_version).to eq '2.33'
       end
     end
   end
