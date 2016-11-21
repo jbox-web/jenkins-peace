@@ -4,7 +4,7 @@ module Jenkins
   module Peace
     class WarFile
 
-      JENKINS_VERSION_REGEX = /jenkins-core-(1\.\d{3}).jar/
+      JENKINS_VERSION_REGEX = /jenkins-core-(\d{1}\.\d{2,3}).jar/
 
       attr_reader :version
       attr_reader :lib_path
