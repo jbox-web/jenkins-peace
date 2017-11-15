@@ -7,15 +7,8 @@ describe Jenkins::Peace::ContentDownloader do
   INVALID_URL  = 'http://mirrors.jenkins-ci.org/war/120000/jenkins.war'
 
 
-  def logger
-    Jenkins::Peace::ConsoleLogger.new([])
-  end
-
-
-  def build_content_downloader
-    Jenkins::Peace::ContentDownloader.new('/tmp/jenkins-test.war', logger)
-  end
-
+  let(:logger) { Jenkins::Peace::ConsoleLogger.new([]) }
+  let(:build_content_downloader) { Jenkins::Peace::ContentDownloader.new('/tmp/jenkins-test.war', logger) }
   let(:content_downloader) { build_content_downloader }
 
 

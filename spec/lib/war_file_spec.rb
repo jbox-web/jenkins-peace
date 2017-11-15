@@ -6,33 +6,12 @@ describe Jenkins::Peace::WarFile do
     Jenkins::Peace.build_war_file(version)
   end
 
-
-  def base_dir
-    File.join(WAR_FILES_CACHE, '1.630')
-  end
-
-
-  def lib_dir
-    File.join(WAR_UNPACKED_CACHE, '1.630')
-  end
-
-
-  def location
-    File.join(WAR_FILES_CACHE, '1.630', 'jenkins.war')
-  end
-
-
-  def classpath
-    File.join(WAR_UNPACKED_CACHE, '1.630', 'WEB-INF/lib/jenkins-core-1.630.jar')
-  end
-
-
-  def url
-    'http://mirrors.jenkins-ci.org/war/1.630/jenkins.war'
-  end
-
-
-  let(:war_file) { build_war_file('1.630') }
+  let(:base_dir)  { File.join(WAR_FILES_CACHE, '1.630') }
+  let(:lib_dir)   { File.join(WAR_UNPACKED_CACHE, '1.630') }
+  let(:location)  { File.join(WAR_FILES_CACHE, '1.630', 'jenkins.war') }
+  let(:classpath) { File.join(WAR_UNPACKED_CACHE, '1.630', 'WEB-INF/lib/jenkins-core-1.630.jar') }
+  let(:url)       { 'http://mirrors.jenkins-ci.org/war/1.630/jenkins.war' }
+  let(:war_file)  { build_war_file('1.630') }
 
   it { expect(war_file.base_dir).to eq base_dir }
   it { expect(war_file.lib_dir).to eq lib_dir }

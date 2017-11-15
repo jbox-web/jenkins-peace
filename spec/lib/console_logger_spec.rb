@@ -2,15 +2,12 @@ require 'spec_helper'
 
 describe Jenkins::Peace::ConsoleLogger do
 
-  def helper
-    Jenkins::Peace::ConsoleLogger.new([])
-  end
-
+  let(:logger) { Jenkins::Peace::ConsoleLogger.new([]) }
 
   describe '.info' do
     it 'should render colored message' do
       # allow_any_instance_of(Jenkins::Peace::ConsoleLogger).to receive(:logger).and_return([])
-      expect(helper.info('foo')).to eq ["\e[32mfoo\e[0m\n"]
+      expect(logger.info('foo')).to eq ["\e[32mfoo\e[0m\n"]
     end
   end
 
@@ -18,7 +15,7 @@ describe Jenkins::Peace::ConsoleLogger do
   describe '.warn' do
     it 'should render colored message' do
       # allow_any_instance_of(Jenkins::Peace::ConsoleLogger).to receive(:logger).and_return([])
-      expect(helper.warn('bar')).to eq ["\e[33mbar\e[0m\n"]
+      expect(logger.warn('bar')).to eq ["\e[33mbar\e[0m\n"]
     end
   end
 
@@ -26,7 +23,7 @@ describe Jenkins::Peace::ConsoleLogger do
   describe '.error' do
     it 'should render colored message' do
       # allow_any_instance_of(Jenkins::Peace::ConsoleLogger).to receive(:logger).and_return([])
-      expect(helper.error('boo')).to eq ["\e[31mboo\e[0m\n"]
+      expect(logger.error('boo')).to eq ["\e[31mboo\e[0m\n"]
     end
   end
 
