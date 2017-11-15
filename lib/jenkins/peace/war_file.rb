@@ -1,4 +1,5 @@
 require 'socket'
+require 'fileutils'
 
 module Jenkins
   module Peace
