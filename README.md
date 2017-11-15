@@ -14,7 +14,7 @@
 
 This gem aims to replace [jenkins-war](https://rubygems.org/gems/jenkins-war/versions/1.514) to manage Jenkins war files.
 
-The previous version of this gem used to embed the war file directly in the GitHub repo which could lead to very long download time.
+The previous version of this gem used to embed the war file directly in the GitHub repo which could lead to very long upload/download time and some warnings from Github about large files.
 
 This one uses a cache directory to store Jenkins war files (```/<home directory>/.jenkins/war-files```).
 
