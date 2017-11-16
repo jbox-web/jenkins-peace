@@ -1,13 +1,6 @@
 require 'rubygems'
 require 'simplecov'
 require 'rspec'
-require 'pullreview/coverage_reporter'
-
-## Configure SimpleCov
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
-  SimpleCov::Formatter::HTMLFormatter,
-  PullReview::Coverage::Formatter
-])
 
 ## Start Simplecov
 SimpleCov.start do

@@ -1,8 +1,0 @@
----
-rules:
-  ignore:
-  - extra_blank_line_detected
-  - missing_class_documentation
-  - missing_method_documentation
-  - use_a_logger
-  - reduce_number_of_params
