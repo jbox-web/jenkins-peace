@@ -7,7 +7,6 @@
 [![Build Status](https://travis-ci.org/jbox-web/jenkins-peace.svg?branch=master)](https://travis-ci.org/jbox-web/jenkins-peace)
 [![Code Climate](https://codeclimate.com/github/jbox-web/jenkins-peace/badges/gpa.svg)](https://codeclimate.com/github/jbox-web/jenkins-peace)
 [![Test Coverage](https://codeclimate.com/github/jbox-web/jenkins-peace/badges/coverage.svg)](https://codeclimate.com/github/jbox-web/jenkins-peace/coverage)
-[![Dependency Status](https://gemnasium.com/jbox-web/jenkins-peace.svg)](https://gemnasium.com/jbox-web/jenkins-peace)
 
 ### A small console application to manage Jenkins war files, easy, and in peace ;)
 
