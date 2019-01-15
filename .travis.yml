@@ -1,14 +1,15 @@
-dist: trusty
 language: ruby
-sudo: false
 cache: bundler
+sudo: false
 rvm:
+  - 2.6.0
   - 2.5.3
   - 2.4.5
   - 2.3.8
-  - 2.2.10
-  - jruby-1.7.26
   - jruby-9.2.4.0
+before_install:
+  - gem update --system
+  - gem install bundler --no-document
 env:
   global:
     - JRUBY_OPTS="--debug"
