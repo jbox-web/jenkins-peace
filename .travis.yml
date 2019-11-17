@@ -7,9 +7,6 @@ rvm:
   - 2.4.5
   - 2.3.8
   - jruby-9.2.4.0
-before_install:
-  - gem update --system
-  - gem install bundler --no-document
 env:
   global:
     - JRUBY_OPTS="--debug"
