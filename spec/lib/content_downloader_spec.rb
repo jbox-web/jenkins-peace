@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Jenkins::Peace::ContentDownloader do
 
-  VALID_URL    = 'http://jenkins.mirror.isppower.de/war/2.150/jenkins.war'
+  VALID_URL    = 'http://jenkins.mirror.isppower.de/war/2.170/jenkins.war'
   REDIRECT_URL = 'http://mirrors.jenkins-ci.org/war/latest/jenkins.war'
   INVALID_URL  = 'http://mirrors.jenkins-ci.org/war/120000/jenkins.war'
 
