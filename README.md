@@ -4,7 +4,7 @@
 [![GitHub release](https://img.shields.io/github/release/jbox-web/jenkins-peace.svg)](https://github.com/jbox-web/jenkins-peace/releases/latest)
 [![Gem](https://img.shields.io/gem/v/jenkins-peace.svg)](https://rubygems.org/gems/jenkins-peace/versions/1.0.0)
 [![Gem](https://img.shields.io/gem/dtv/jenkins-peace.svg)](https://rubygems.org/gems/jenkins-peace/versions/1.0.0)
-[![Build Status](https://travis-ci.org/jbox-web/jenkins-peace.svg?branch=master)](https://travis-ci.org/jbox-web/jenkins-peace)
+[![Build Status](https://travis-ci.com/jbox-web/jenkins-peace.svg?branch=master)](https://travis-ci.com/jbox-web/jenkins-peace)
 [![Code Climate](https://codeclimate.com/github/jbox-web/jenkins-peace/badges/gpa.svg)](https://codeclimate.com/github/jbox-web/jenkins-peace)
 [![Test Coverage](https://codeclimate.com/github/jbox-web/jenkins-peace/badges/coverage.svg)](https://codeclimate.com/github/jbox-web/jenkins-peace/coverage)
 
