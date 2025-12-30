@@ -4,9 +4,9 @@
 [![GitHub release](https://img.shields.io/github/release/jbox-web/jenkins-peace.svg)](https://github.com/jbox-web/jenkins-peace/releases/latest)
 [![Gem](https://img.shields.io/gem/v/jenkins-peace.svg)](https://rubygems.org/gems/jenkins-peace/versions/1.0.0)
 [![Gem](https://img.shields.io/gem/dtv/jenkins-peace.svg)](https://rubygems.org/gems/jenkins-peace/versions/1.0.0)
-[![Build Status](https://travis-ci.com/jbox-web/jenkins-peace.svg?branch=master)](https://travis-ci.com/jbox-web/jenkins-peace)
-[![Code Climate](https://codeclimate.com/github/jbox-web/jenkins-peace/badges/gpa.svg)](https://codeclimate.com/github/jbox-web/jenkins-peace)
-[![Test Coverage](https://codeclimate.com/github/jbox-web/jenkins-peace/badges/coverage.svg)](https://codeclimate.com/github/jbox-web/jenkins-peace/coverage)
+[![CI](https://github.com/jbox-web/jenkins-peace/workflows/CI/badge.svg)](https://github.com/jbox-web/jenkins-peace/actions)
+[![Maintainability](https://qlty.sh/gh/jbox-web/projects/jenkins-peace/maintainability.svg)](https://qlty.sh/gh/jbox-web/projects/jenkins-peace)
+[![Code Coverage](https://qlty.sh/gh/jbox-web/projects/jenkins-peace/coverage.svg)](https://qlty.sh/gh/jbox-web/projects/jenkins-peace)
 
 ### A small console application to manage Jenkins war files, easy, and in peace ;)
 
