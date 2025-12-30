@@ -1,7 +1,3 @@
-require 'ruby-progressbar'
-require 'net/http'
-require 'uri'
-
 module Jenkins
   module Peace
     class ContentDownloader

@@ -1,6 +1,3 @@
-require 'tty-table'
-require 'thor'
-
 module Jenkins
   module Peace
     class CLI < Thor

@@ -1,5 +1,3 @@
-require 'pathname'
-
 module Jenkins
   module Peace
     extend self

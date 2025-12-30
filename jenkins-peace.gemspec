@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.bindir      = 'exe'
   s.executables = ['jenkins.peace']
 
+  s.add_runtime_dependency 'net-http'
+  s.add_runtime_dependency 'ostruct'
   s.add_runtime_dependency 'rake'
   s.add_runtime_dependency 'ruby-progressbar'
   s.add_runtime_dependency 'thor'

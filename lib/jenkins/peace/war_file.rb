@@ -1,6 +1,3 @@
-require 'socket'
-require 'fileutils'
-
 module Jenkins
   module Peace
     class WarFile
