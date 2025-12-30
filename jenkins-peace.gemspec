@@ -20,11 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'net-http'
   s.add_runtime_dependency 'ostruct'
-  s.add_runtime_dependency 'rake'
   s.add_runtime_dependency 'ruby-progressbar'
   s.add_runtime_dependency 'thor'
   s.add_runtime_dependency 'tty-table'
-
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'simplecov', '~> 0.17.1'
 end
