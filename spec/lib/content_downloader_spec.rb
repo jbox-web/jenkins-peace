@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Jenkins::Peace::ContentDownloader do
+RSpec.describe Jenkins::Peace::ContentDownloader do
 
   VALID_URL    = 'http://ftp-nyc.osuosl.org/pub/jenkins/war-stable/2.528.3/jenkins.war'
   REDIRECT_URL = 'http://mirrors.jenkins-ci.org/war/latest/jenkins.war'

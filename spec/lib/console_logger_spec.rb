@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Jenkins::Peace::ConsoleLogger do
+RSpec.describe Jenkins::Peace::ConsoleLogger do
 
   let(:logger) { Jenkins::Peace::ConsoleLogger.new([]) }
 

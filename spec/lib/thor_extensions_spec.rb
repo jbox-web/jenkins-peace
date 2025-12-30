@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Jenkins::Peace::ThorExtensions do
+RSpec.describe Jenkins::Peace::ThorExtensions do
 
   VALID_LIST = [[
     "\e[32m1.629\e[0m",

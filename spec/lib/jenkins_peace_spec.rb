@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Jenkins::Peace do
+RSpec.describe Jenkins::Peace do
 
   def stub_all_war_files_with_return(value)
     expect_any_instance_of(Jenkins::Peace).to receive(:all_war_files).at_least(:once).and_return(value)

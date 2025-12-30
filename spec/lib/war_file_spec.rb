@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Jenkins::Peace::WarFile do
+RSpec.describe Jenkins::Peace::WarFile do
 
   def build_war_file(version)
     Jenkins::Peace.build_war_file(version)
