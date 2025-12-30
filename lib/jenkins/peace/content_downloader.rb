@@ -1,19 +1,17 @@
+# frozen_string_literal: true
+
 module Jenkins
   module Peace
     class ContentDownloader
-
-      attr_reader :target_file
-      attr_reader :logger
-
+      attr_reader :target_file, :logger
 
       def initialize(target_file, logger)
         @target_file = target_file
         @logger      = logger
       end
 
-
-      def download(url, limit = 10)
-        raise ArgumentError, 'too many HTTP redirects' if limit == 0
+      def download(url, limit = 10) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        raise ArgumentError, 'too many HTTP redirects' if limit.zero?
 
         start_http_session(url) do |http, uri|
           response = http.request_head(uri.path)
@@ -28,12 +26,11 @@ module Jenkins
             logger.error response.value
           end
         end
-      rescue => e
+      rescue StandardError => e
         logger.error "Error while downloading '#{url}' : #{e.message}"
       end
 
-
-      def download_content(url)
+      def download_content(url) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
         logger.info "Downloading   : '#{url}'"
         start_http_session(url) do |http, uri|
           response = http.request_head(uri.path)
@@ -45,15 +42,13 @@ module Jenkins
             end
           end
         end
-      rescue => e
+      rescue StandardError => e
         logger.error "Error while downloading '#{url}' : #{e.message}"
       end
-
 
       def build_progress_bar(total)
         ProgressBar.create(title: 'Downloading', starting_at: 0, total: total, format: '%a |%b>%i| %p%% %t')
       end
-
 
       def start_http_session(url)
         uri = URI(url)
@@ -62,7 +57,6 @@ module Jenkins
           yield http, uri
         end
       end
-
     end
   end
 end

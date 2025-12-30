@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Nicolas Rodriguez']
   s.email       = ['nrodriguez@jbox-web.com']
   s.homepage    = 'http://jbox-web.github.io/jenkins-peace/'
-  s.summary     = %q{Fetch and use a specific Jenkins version with Rubygems}
-  s.description = %q{Download and install a specific version of the Jenkins war file which can be used for either running a server, or for plugin development}
+  s.summary     = 'Fetch and use a specific Jenkins version with Rubygems'
+  s.description = 'Download and install a specific version of the Jenkins war file which can be used for either running a server, or for plugin development'
   s.license     = 'MIT'
 
   s.files = Dir['README.md', 'CHANGELOG.md', 'LICENSE', 'AUTHORS', 'lib/**/*.rb', 'exe/*']

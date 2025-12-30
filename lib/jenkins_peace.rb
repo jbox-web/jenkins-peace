@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # require ruby dependencies
 require 'fileutils'
 require 'net/http'

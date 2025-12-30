@@ -1,0 +1,32 @@
+---
+plugins:
+  - rubocop-performance
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - bin/*
+    - spec/**/*
+
+Gemspec/RequireMFA:
+  Enabled: false
+
+#########
+# STYLE #
+#########
+
+Style/Documentation:
+  Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - lib/jenkins-peace.rb
+
+Layout/LineLength:
+  Exclude:
+    - jenkins-peace.gemspec

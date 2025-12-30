@@ -1,26 +1,14 @@
+# frozen_string_literal: true
+
 module Jenkins
   module Peace
     class WarFile
-
       JENKINS_VERSION_REGEX = /jenkins-core-(\d{1}\.\d{2,3}).jar/
 
-      attr_reader :version
-      attr_reader :lib_path
-      attr_reader :base_path
-      attr_reader :base_url
-      attr_reader :server_path
-      attr_reader :logger
+      attr_reader :version, :lib_path, :base_path, :base_url, :server_path, :logger, :file_name, :base_dir, :lib_dir,
+                  :klass_path, :plugins_path, :location, :url
 
-      attr_reader :file_name
-      attr_reader :base_dir
-      attr_reader :lib_dir
-      attr_reader :klass_path
-      attr_reader :plugins_path
-      attr_reader :location
-      attr_reader :url
-
-
-      def initialize(version, opts = {})
+      def initialize(version, opts = {}) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
         @version      = version
         @lib_path     = opts.fetch(:lib_path, '')
         @base_path    = opts.fetch(:base_path, '')
@@ -37,62 +25,52 @@ module Jenkins
         @url          = File.join(base_url, version, file_name)
       end
 
-
       def latest_version?
         version == 'latest'
       end
 
-
       def real_version
         return version unless latest_version?
+
         klass = find_core_librairy
         klass.nil? ? nil : klass.match(JENKINS_VERSION_REGEX)[1]
       end
-
 
       def classpath
         File.join(lib_dir, 'WEB-INF', 'lib', "jenkins-core-#{real_version}.jar")
       end
 
-
       def exists?
         File.exist?(location)
       end
-
 
       def unpacked?
         File.exist?(lib_dir) && File.exist?(classpath)
       end
 
-
       def installed?
         exists? && unpacked?
       end
-
 
       def download!
         FileUtils.mkdir_p base_dir
         fetch_content(url, location)
       end
 
-
       def install!
         download!
         unpack!
       end
-
 
       def remove!
         FileUtils.rm_rf base_dir
         FileUtils.rm_rf lib_dir
       end
 
-
       def unpack!
         FileUtils.mkdir_p(lib_dir)
         execute_command("cd #{lib_dir} && jar xvf #{location}")
       end
-
 
       def start!(options = {})
         control = options.fetch(:control, 3002).to_i
@@ -106,8 +84,7 @@ module Jenkins
         end
       end
 
-
-      def build_command_line(options = {})
+      def build_command_line(options = {}) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
         home    = options.fetch(:home, server_path)
         port    = options.fetch(:port, 3001).to_i
         control = options.fetch(:control, 3002).to_i
@@ -126,24 +103,19 @@ module Jenkins
         cmd
       end
 
-
       private
 
+      def execute_command(command)
+        `#{command}`
+      end
 
-        def execute_command(command)
-          `#{command}`
-        end
+      def fetch_content(url, target_file, _limit = 10)
+        ContentDownloader.new(target_file, logger).download(url)
+      end
 
-
-        def fetch_content(url, target_file, limit = 10)
-          ContentDownloader.new(target_file, logger).download(url)
-        end
-
-
-        def find_core_librairy
-          Dir[File.join(lib_dir, 'WEB-INF', 'lib', '*.jar')].select { |f| f =~ JENKINS_VERSION_REGEX }.first
-        end
-
+      def find_core_librairy
+        Dir[File.join(lib_dir, 'WEB-INF', 'lib', '*.jar')].grep(JENKINS_VERSION_REGEX).first
+      end
     end
   end
 end
