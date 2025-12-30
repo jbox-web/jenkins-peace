@@ -95,7 +95,7 @@ module Jenkins
 
 
     def all_war_files
-      FileUtils.mkdir_p war_files_cache unless File.exists?(war_files_cache)
+      FileUtils.mkdir_p war_files_cache unless File.exist?(war_files_cache)
       Pathname.new(war_files_cache).children.select { |c| c.directory? }
     end
 

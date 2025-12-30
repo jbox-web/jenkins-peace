@@ -56,12 +56,12 @@ module Jenkins
 
 
       def exists?
-        File.exists?(location)
+        File.exist?(location)
       end
 
 
       def unpacked?
-        File.exists?(lib_dir) && File.exists?(classpath)
+        File.exist?(lib_dir) && File.exist?(classpath)
       end
 
 

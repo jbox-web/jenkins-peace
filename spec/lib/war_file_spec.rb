@@ -88,7 +88,7 @@ describe Jenkins::Peace::WarFile do
 
   describe '#exists?' do
     it 'should return true if war file exists' do
-      expect(File).to receive(:exists?).with(location)
+      expect(File).to receive(:exist?).with(location)
       war_file.exists?
     end
   end
@@ -96,8 +96,8 @@ describe Jenkins::Peace::WarFile do
 
   describe '#unpacked?' do
     it 'should return true if war file has been unpacked' do
-      expect(File).to receive(:exists?).with(lib_dir).and_return(true)
-      expect(File).to receive(:exists?).with(classpath)
+      expect(File).to receive(:exist?).with(lib_dir).and_return(true)
+      expect(File).to receive(:exist?).with(classpath)
       war_file.unpacked?
     end
   end
