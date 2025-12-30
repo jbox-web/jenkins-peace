@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.description = 'Download and install a specific version of the Jenkins war file which can be used for either running a server, or for plugin development'
   s.license     = 'MIT'
 
-  s.required_ruby_version = '>= 3.2.0'
+  s.required_ruby_version = '>= 3.1.0'
 
   s.files = Dir['README.md', 'CHANGELOG.md', 'LICENSE', 'AUTHORS', 'lib/**/*.rb', 'exe/*']
 
