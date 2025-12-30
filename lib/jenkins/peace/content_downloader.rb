@@ -57,7 +57,8 @@ module Jenkins
 
       def start_http_session(url)
         uri = URI(url)
-        Net::HTTP.start(uri.host, uri.port) do |http|
+        use_ssl = uri.scheme == 'https'
+        Net::HTTP.start(uri.host, uri.port, use_ssl: use_ssl, verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
           yield http, uri
         end
       end
